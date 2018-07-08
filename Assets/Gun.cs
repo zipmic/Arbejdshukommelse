@@ -24,6 +24,8 @@ public class Gun : MonoBehaviour
     private GameObject ObjectToLift;
     private bool isLifting;
 
+    public GameObject LineR;
+
     // Use this for initialization
     void Start()
     {
@@ -41,11 +43,12 @@ public class Gun : MonoBehaviour
             
             if (isLifting)
             {
-                ObjectToLift.transform.position = transform.position+CameraPoint.transform.forward * 3.5f;
+                ObjectToLift.GetComponent<Rigidbody>().MovePosition(transform.position + CameraPoint.transform.forward * 3.5f);
+               // ObjectToLift.transform.position = transform.position+CameraPoint.transform.forward * 3.5f;
             }
 
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 5, TheLayerMask))
+            if (Physics.Raycast(CameraPoint.transform.position, CameraPoint.transform.forward, out hit, 5, TheLayerMask))
             {
               
                 if (hit.collider.tag == "Block" && isLifting == false)
@@ -75,14 +78,19 @@ public class Gun : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
 
+                LineR.gameObject.SetActive(true);
+                StartCoroutine(DisappearLine());
                 GameObject g = Instantiate(GunExplosion) as GameObject;
                 g.transform.position = GunExplosionPosition.transform.position;
 
                 PistolAnimator.Play("shoot");
 
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit, 100, TheLayerMask))
+                if (Physics.Raycast(CameraPoint.transform.position, CameraPoint.transform.forward, out hit, 30, TheLayerMask))
                 {
+
+                    LineR.GetComponent<LineRenderer>().SetPosition(0, CameraPoint.transform.position);
+                    LineR.GetComponent<LineRenderer>().SetPosition(1, CameraPoint.transform.forward * 100);
                     PistolAnimator.SetBool("isShooting", true);
                     if (hit.collider.tag == "Block")
                     {
@@ -114,6 +122,12 @@ public class Gun : MonoBehaviour
         }
             
 		
+    }
+
+    IEnumerator DisappearLine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        LineR.gameObject.SetActive(false);
     }
 
     IEnumerator EndScreenAndRestart()

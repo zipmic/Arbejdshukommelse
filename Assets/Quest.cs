@@ -24,7 +24,7 @@ public class Quest : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-
+        
         if (PlayerPrefs.HasKey("Highscore"))
         {
             HighscoreText.text = "Bedste tid: "+PlayerPrefs.GetFloat("Highscore");
@@ -49,7 +49,8 @@ public class Quest : MonoBehaviour {
                   
         }
 
-        // Spawn 120 Blocks
+
+        /*// Spawn 120 Blocks
         for (int i = 0; i < SpawnPoints.Count; i++)
         {
 
@@ -58,6 +59,7 @@ public class Quest : MonoBehaviour {
             t.GetComponent<WordBlock>().SetBlock(WordsReference.AllTheWords[i]); 
 
         }
+        */
 
 
      
@@ -79,6 +81,7 @@ public class Quest : MonoBehaviour {
 
     void Update()
     {
+
         TimeSpent += Time.deltaTime;
         TidBrugt.text = "Tid: "+((int)TimeSpent).ToString();
     }
@@ -89,6 +92,7 @@ public class Quest : MonoBehaviour {
         {
             if (s == word)
             {
+                print("s: " + s + " er det samme som: " + word);
                 return true;
             }
         }
