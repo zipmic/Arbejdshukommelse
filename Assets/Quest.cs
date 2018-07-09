@@ -17,7 +17,7 @@ public class Quest : MonoBehaviour {
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
     public Text TidBrugt,HighscoreText;
-    private float TimeSpent;
+  
 
     private int _amountFound = 0;
 
@@ -68,13 +68,7 @@ public class Quest : MonoBehaviour {
 
     public void FoundAllWords()
     {
-        if (PlayerPrefs.HasKey("Highscore"))
-        {
-            if (PlayerPrefs.GetFloat("Highscore") > TimeSpent)
-            {
-                PlayerPrefs.SetFloat("Highscore", TimeSpent);
-            }
-        }
+      
 
 
     }
@@ -82,8 +76,7 @@ public class Quest : MonoBehaviour {
     void Update()
     {
 
-        TimeSpent += Time.deltaTime;
-        TidBrugt.text = "Tid: "+((int)TimeSpent).ToString();
+       
     }
 	
     public bool CheckWord(string word)
@@ -115,7 +108,7 @@ public class Quest : MonoBehaviour {
                 {
                     // win
                     WinScreen.gameObject.SetActive(true);
-                    PlayerPrefs.SetFloat("Score", TimeSpent);
+
                     FoundAllWords();
 
                 }
