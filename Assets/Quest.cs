@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Quest : MonoBehaviour {
 
     public Words WordsReference;
+	public Points PointController;
 
     public List<string> WordsToFind = new List<string>();
     public int AmountOfWordsToFind = 3;
@@ -78,6 +79,11 @@ public class Quest : MonoBehaviour {
 
        
     }
+
+	public void AddCorrectWord()
+	{
+		PointController.AddCorrectPoint();
+	}
 	
     public bool CheckWord(string word)
     {

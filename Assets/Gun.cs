@@ -40,25 +40,24 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
         {
-            
-            if (isLifting)
-            {
-                ObjectToLift.GetComponent<Rigidbody>().MovePosition(transform.position + CameraPoint.transform.forward * 3.5f);
-               // ObjectToLift.transform.position = transform.position+CameraPoint.transform.forward * 3.5f;
-            }
+          
 
             RaycastHit hit;
             if (Physics.Raycast(CameraPoint.transform.position, CameraPoint.transform.forward, out hit, 5, TheLayerMask))
             {
               
-                if (hit.collider.tag == "Block" && isLifting == false)
+                if (hit.collider.tag == "Block")
                 {
-                    // løft blokken
-                    ObjectToLift = hit.collider.gameObject;
-                    isLifting = true;
+					string s = hit.collider.gameObject.GetComponent<WordBlock>().BlockText;
+					if (QuestGiver.CheckWord(s))
+					{
+						// Det var altså et rigtigt ord... ih. Du tabte!
+						QuestGiver.AddCorrectWord();
+						Destroy(hit.collider.gameObject);
+					}
+					
 
-
-                }   
+				}   
             }
 
            

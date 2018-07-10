@@ -21,7 +21,7 @@ public class TimeText : MonoBehaviour {
 
         if (isRunning)
         {
-            TimeLeft += Time.deltaTime;
+            TimeLeft -= Time.deltaTime;
             TextToDisplay.text = "Tid: " + ((int)TimeLeft).ToString();
         }
 		
