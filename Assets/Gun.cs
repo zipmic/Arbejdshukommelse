@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour
     public GameObject GunExplosion;
     public GameObject GunExplosionPosition;
 
-    public GameObject EffectAtBlock;
+    public GameObject WrongEffect, CorrectEffect;
 
     public GameObject DeathScreen;
 
@@ -38,7 +38,7 @@ public class Gun : MonoBehaviour
 
         FireRate += Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.E))
+        /*if (Input.GetKey(KeyCode.E))
         {
           
 
@@ -67,13 +67,11 @@ public class Gun : MonoBehaviour
             isLifting = false;
             ObjectToLift = null;
         }
-
+*/
 
         if (FireRate >= 0.2f)
         {
-            
 
-            // du skød en jeg tror det er den
             if (Input.GetMouseButtonDown(0))
             {
 
@@ -97,14 +95,14 @@ public class Gun : MonoBehaviour
                         string s = hit.collider.gameObject.GetComponent<WordBlock>().BlockText;
                         if (QuestGiver.CheckWord(s))
                         {
-                            // Det var altså et rigtigt ord... ih. Du tabte!
-                            StartCoroutine(EndScreenAndRestart());
+                            // Det er et rigtigt ord, kæmpe eksplosion og point!
+                            Instantiate(CorrectEffect, hit.transform.position, Quaternion.identity);
+
                         }
                         else
                         {
-                            // Dræb den!
-                            Destroy(hit.collider.gameObject);
-                            Instantiate(EffectAtBlock, hit.transform.position, Quaternion.identity);
+                            // forkert! Lille eksplosion.
+                            Instantiate(WrongEffect, hit.transform.position, Quaternion.identity);
                        
                         }
                     }   

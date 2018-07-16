@@ -22,7 +22,17 @@ public class Quest : MonoBehaviour {
 
     private int _amountFound = 0;
 
+
+
+    /// <summary>
+    /// Når man finder et korrekt ord, skal det tjekkes af fra listen og man får point. Og det ord man tjekkede af skal skifte til rød.
+    /// Når man har alle "AmountOfWordsToFind", så bliver listen fyldt med 1 ord mere og nyt random
+    /// 
+    /// </summary>
+
 	// Use this for initialization
+
+
 	void Start () 
     {
         
@@ -31,6 +41,13 @@ public class Quest : MonoBehaviour {
             HighscoreText.text = "Bedste tid: "+PlayerPrefs.GetFloat("Highscore");
         }
 
+        NewQuestText();
+
+
+	}
+
+    void NewQuestText()
+    {
         QuestText.text = "Find ";
         for (int i = 0; i < AmountOfWordsToFind; i++)
         {
@@ -38,41 +55,20 @@ public class Quest : MonoBehaviour {
             int word = Random.Range(0, WordsReference.AllTheWords.Length);
             WordsToFind.Add(WordsReference.AllTheWords[word]);
 
-            if(i == AmountOfWordsToFind-1)
+            if (i == AmountOfWordsToFind - 1)
             {
-                QuestText.text += "<color=#00ff00ff>"+WordsReference.AllTheWords[word]+"</Color>";
+                QuestText.text += "<color=#00ff00ff>" + WordsReference.AllTheWords[word] + "</Color>";
             }
             else if (i != AmountOfWordsToFind)
             {
-                QuestText.text += "<color=#00ff00ff>"+WordsReference.AllTheWords[word]+"</Color>" + ", ";
+                QuestText.text += "<color=#00ff00ff>" + WordsReference.AllTheWords[word] + "</Color>" + ", ";
             }
-         
-                  
-        }
 
-
-        /*// Spawn 120 Blocks
-        for (int i = 0; i < SpawnPoints.Count; i++)
-        {
-
-            GameObject t = Instantiate(PrefabWordBLock) as GameObject;
-            t.transform.position = SpawnPoints[i].transform.position;
-            t.GetComponent<WordBlock>().SetBlock(WordsReference.AllTheWords[i]); 
 
         }
-        */
-
-
-     
-
-	}
-
-    public void FoundAllWords()
-    {
-      
-
 
     }
+ 
 
     void Update()
     {
@@ -87,18 +83,32 @@ public class Quest : MonoBehaviour {
 	
     public bool CheckWord(string word)
     {
-        foreach(string s in WordsToFind)
+        for (int i = 0; i < WordsToFind.Count; i++)
         {
-            if (s == word)
+            if (WordsToFind[i] == word)
             {
-                print("s: " + s + " er det samme som: " + word);
+
+                WordsToFind[i] = "";
+                _amountFound++;
+                AddCorrectWord();
+                if(_amountFound >= AmountOfWordsToFind)
+                {
+                    // Der er fundet dem alle, new quest og sværere!
+                    AmountOfWordsToFind++;
+                    NewQuestText();
+                }
+                // noget med at gøre den rigtige tekst rød så man kan se progress. Men prøver ikke i starten.
                 return true;
             }
         }
 
         return false;
     }
+
+
+
     public GameObject WinScreen;
+
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Block")
@@ -115,7 +125,6 @@ public class Quest : MonoBehaviour {
                     // win
                     WinScreen.gameObject.SetActive(true);
 
-                    FoundAllWords();
 
                 }
                     

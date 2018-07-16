@@ -18,7 +18,8 @@ public class CatBehaviour : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void CatWalk () {
+	void CatWalk () 
+    {
 
 
         agent.SetDestination(Target.transform.position);

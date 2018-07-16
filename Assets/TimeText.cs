@@ -23,6 +23,11 @@ public class TimeText : MonoBehaviour {
         {
             TimeLeft -= Time.deltaTime;
             TextToDisplay.text = "Tid: " + ((int)TimeLeft).ToString();
+
+            if(TimeLeft <= 0)
+            {
+                // end game
+            }
         }
 		
 	}

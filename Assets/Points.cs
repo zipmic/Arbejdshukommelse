@@ -14,4 +14,12 @@ public class Points : MonoBehaviour {
 		_amountOfCorrectPoints++;
 		PointText.text = _amountOfCorrectPoints.ToString();
 	}
+
+    public void SaveHighscore()
+    {
+        if (PlayerPrefs.GetInt("Highscore") <= _amountOfCorrectPoints)
+        {
+            PlayerPrefs.SetInt("Highscore", _amountOfCorrectPoints);
+        }
+    }
 }
