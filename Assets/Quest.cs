@@ -21,7 +21,7 @@ public class Quest : MonoBehaviour {
   
 
     private int _amountFound = 0;
-
+    private bool _gameStarted = false;
 
 
     /// <summary>
@@ -41,7 +41,9 @@ public class Quest : MonoBehaviour {
             HighscoreText.text = "Bedste tid: "+PlayerPrefs.GetFloat("Highscore");
         }
 
-        NewQuestText();
+        QuestText.text = "Tryk E for at starte...";
+
+  
 
 
 	}
@@ -64,7 +66,6 @@ public class Quest : MonoBehaviour {
                 QuestText.text += "<color=#00ff00ff>" + WordsReference.AllTheWords[word] + "</Color>" + ", ";
             }
 
-
         }
 
     }
@@ -73,7 +74,11 @@ public class Quest : MonoBehaviour {
     void Update()
     {
 
-       
+        if(Input.GetKeyDown(KeyCode.E) && _gameStarted == false)
+        {
+            _gameStarted = true;
+            NewQuestText();
+        }
     }
 
 	public void AddCorrectWord()
